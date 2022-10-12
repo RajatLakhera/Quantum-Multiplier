@@ -5,7 +5,7 @@ from math import pi
 '''This function operates on a quantum register and converts it from Computational to Fourier Basis for further addition.
 In other words, it is creating Fourier Transform of the register which is basically a sequence of controlled pahse rotations'''
 
-def QFT(circuit, quantum_register, n):              #why not use pi in the function directly?
+def QFT(circuit, quantum_register, n)
     qc.h(quantum_register[n])
     for j in range (0,n):
         circuit.cp(pi/float(2**(j+1)), quantum_register[n - (j+1)], quantum_register[n])
@@ -77,7 +77,7 @@ if (n2 > n1):
     n2, n1 = n1, n2
     
 #This quantum register will store the values of repeated summation of multiplicand until multiplier is zero
-accumulator = QuantumRegister(n)
+adder = QuantumRegister(n)
 #This quantum register will decrease the value of multiplier by 1 after every iteration
 decrementer = QuantumRegister(1)
 
@@ -87,7 +87,7 @@ multiplier = QuantumRegister(n2)
 
 c_reg = ClassicalRegister(n)
 
-qc = QuantumCircuit(accumulator, multiplier, multiplicand, decrementer, c_reg, name = "circuit")
+qc = QuantumCircuit(adder, multiplier, multiplicand, decrementer, c_reg, name = "circuit")
 
 #Setting the decrementer to state |1>
 qc.x(decrementer)
@@ -111,7 +111,7 @@ multiplier_stopper = '1'
 #Result of the experiment are stored in the "counts" variable duting the processing
 while(int(multiplier_stopper) != 0):
     #This function call is to add multiplicand and store it in accumulator
-    summation(accumulator, multiplicand, qc, 1)
+    summation(adder, multiplicand, qc, 1)
     
     #This function call is to decrease the value of multiplier by 1
     summation(multiplier, decrementer, qc, -1)
@@ -122,7 +122,7 @@ while(int(multiplier_stopper) != 0):
     counts = job.result().get_counts(qc)
     multiplier_stopper = list(counts.keys())[0]
 
-qc.measure(accumulator, c_reg)
+qc.measure(adder, c_reg)
 
 job = execute(qc, backend = Aer.get_backend('qasm_simulator'), shots = 2)
 counts = job.result().get_counts(qc)
