@@ -30,7 +30,6 @@ def QFT_adder(circuit, register_x, register_y, n, factor):
         else:
             circuit.cp(factor*pi /  float(2**(j)),register_y[n - j], register_x[n])
 #---------------------------------------------------------------------------------------------------------------------
-#How to use the above function to subtract? => using value of factor as -1 instead of 1
 
 '''Putting together all the above functions. Here the term factor is used to tell the program whether to add or to subrtract'''
 
