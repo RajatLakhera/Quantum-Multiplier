@@ -1,8 +1,10 @@
 
+'''Importing necessary files from Qiskit'''
+
 from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister, transpile, Aer, execute, IBMQ
 from math import pi
 #----------------------------------------------------------------------------------------------------------------------
-'''This function operates on a quantum register and converts it from Computational to Fourier Basis for further addition.
+'''This function operates on a quantum register and converts it from Computational to Fourier Basis for further processing.
 In other words, it is creating Fourier Transform of the register which is basically a sequence of controlled pahse rotations'''
 
 def QFT(circuit, quantum_register, n)
@@ -11,7 +13,7 @@ def QFT(circuit, quantum_register, n)
         circuit.cp(pi/float(2**(j+1)), quantum_register[n - (j+1)], quantum_register[n])
 #----------------------------------------------------------------------------------------------------------------------
 
-'''This function performs Inverse Fourier Transform on the quantum register and converts the state back to computational basis'''
+'''This function performs Inverse Fourier Transform on the quantum register and converts the quantum register back to computational basis'''
 
 def Inverse_QFT(circuit,quantum_register, n):
     for j in range(0, n):
@@ -19,8 +21,8 @@ def Inverse_QFT(circuit,quantum_register, n):
     circuit.h(quantum_register[n])
 #---------------------------------------------------------------------------------------------------------------------
 
-'''This function applies Fourier Transform on the combined state of register_x and register_y. Here register_y acts as controller
-for rotations on register_x'''
+'''This function applies Fourier Transform on the combined state of register_x and register_y. Here register_y (the adder register 
+or decrementer) acts as controller for rotations on register_x (the multiplicand or multiplier)'''
 
 def QFT_adder(circuit, register_x, register_y, n, factor):
     l = len(register_y)
@@ -31,7 +33,8 @@ def QFT_adder(circuit, register_x, register_y, n, factor):
             circuit.cp(factor*pi /  float(2**(j)),register_y[n - j], register_x[n])
 #---------------------------------------------------------------------------------------------------------------------
 
-'''Putting together all the above functions. Here the term factor is used to tell the program whether to add or to subrtract'''
+'''This function is to call all the above functions and add the two registers bit by bit. Here the term factor is used 
+to tell the program whether to add or to subrtract'''
 
 def summation(register_x, register_y, qc, factor):
     n = len(register_x) - 1
@@ -59,8 +62,8 @@ print("Processing.....")
 multiplicand_string = bin(int(multiplicand_string))
 multiplier_string = bin(int(multiplier_string))
 
-#The binary conversion above has terms "0b" in the beginning to indicate binary basis
-#This would however interfere with program's working so the characters are deleted
+#The in_built binary conversion function used above has terms "0b" in the beginning of the binary string to indicate 
+#binary basis. This would however interfere with program's working so the characters are deleted
 multiplicand_string = multiplicand_string.replace('0b','')
 multiplier_string = multiplier_string.replace('0b', '')
 
@@ -108,20 +111,23 @@ for i in range(n2):
 multiplier_stopper = '1'
 
 #This loop adds the multiplicand multiple times and decreases the multiplier with each iteration till the multiplier is zero
-#Result of the experiment are stored in the "counts" variable duting the processing
+#Results of the calculations are stored in the "counts" variable duting the processing
 while(int(multiplier_stopper) != 0):
-    #This function call is to add multiplicand and store it in accumulator
+    #This function call is to add multiplicand repeatedly using QFT and store it in adder
     summation(adder, multiplicand, qc, 1)
     
     #This function call is to decrease the value of multiplier by 1
     summation(multiplier, decrementer, qc, -1)
     
+    #This patch of code gets result of experiment and makes the multiplier string zero when
+    #its value goes to 0
     for i in range(len(multiplier)):
         qc.measure(multiplier[i], c_reg[i])
     job = execute(qc, backend = Aer.get_backend('qasm_simulator'), shots = 2)
     counts = job.result().get_counts(qc)
     multiplier_stopper = list(counts.keys())[0]
 
+#Making final measurement and getting the experiment results
 qc.measure(adder, c_reg)
 
 job = execute(qc, backend = Aer.get_backend('qasm_simulator'), shots = 2)
