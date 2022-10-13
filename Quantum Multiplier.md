@@ -37,4 +37,13 @@ by the 'QFT' function which converts it into Fourier Basis. Then using another f
 number of iterations here is decided by the multiplier register. With each addition of multiplicand, the multiplier is decreased by 1 and addition is stopped when
 multiplicand becomes zero. 
 
-## BONUS TASKS
+## Results
+I ran the algorithm by giving different inputs to the function. In addition to printing the result, other things like: time of execution, circuit depth, number of
+qubits and number of gates were also calculated using in-built Qiskit functions. Here are some of the results:
+
+![Screenshot (1609)-tile](https://user-images.githubusercontent.com/84754754/195525217-a3f1e141-275c-49ab-9ada-37c2a4904afe.jpg)
+
+As can be seen from these results, the execution time increases exponentially with increase in number of qubits. This directly causes greater demand for memory/
+processing power. So large circuit depth and width are an issue for this function. 
+
+I tried to input higher numbers in the function, at which point the program started to use half of the system's RAM. Clearly product of double digit numbers (around 40-45) can't be simulated using a desktop pc. The highest number of qubits that I was able to simulate using this function is 34.  Researchers have simulated upto 61 qubits using Supercomputers. So that seems to be the present limit for simulating qubits. 
