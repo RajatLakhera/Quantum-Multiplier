@@ -49,8 +49,8 @@ def multiplication(multiplicand_string, multiplier_string ):
         circuit.h(quantum_register[n])
     #---------------------------------------------------------------------------------------------------------------------
 
-    '''This function applies Fourier Transform on the combined state of register_x and register_y. Here register_y (the adder register 
-    or decrementer according to need) acts as controller for phase rotations on register_x (the multiplicand or multiplier)'''
+    '''This function applies Fourier Transform on the combined state of register_x and register_y. Here register_y acts as 
+    controller for phase rotations on register_x'''
 
     def QFT_adder(circuit, register_x, register_y, n, factor):
         l = len(register_y)
@@ -62,8 +62,9 @@ def multiplication(multiplicand_string, multiplier_string ):
                 circuit.cp(factor*pi /  float(2**(j)),register_y[n - j], register_x[n])
     #---------------------------------------------------------------------------------------------------------------------
 
-    '''This function is to call all the above functions and add the two registers bit by bit. Here the term factor is used 
-    to tell the program whether to add or to subrtract'''
+    '''This function is to call all the above functions and add the two registers (x and y) bit by bit. Here the variable
+    'factor' is used to tell the program whether to add or to subrtract. It performs addition for factor = 1 and subtraction 
+    for factor = -1'''
 
     def summation(register_x, register_y, qc, factor):
         n = len(register_x) - 1
@@ -113,21 +114,21 @@ def multiplication(multiplicand_string, multiplier_string ):
     #This loop adds the multiplicand multiple times and decreases the multiplier with each iteration till the multiplier is zero
     #Results of the calculations are stored in the "counts" variable duting the processing
     while(int(multiplier_stopper) != 0):
-        #This function call is to add multiplicand repeatedly using QFT and store it in adder
+        #This function call is to add multiplicand to adder repeatedly using QFT and the sum is stored in adder
         summation(adder, multiplicand, qc, 1)
     
         #This function call is to decrease the value of multiplier by 1
         summation(multiplier, decrementer, qc, -1)
     
-        #This patch of code gets result of experiment and makes the multiplier string zero when
-        #its value goes to 0
+        #This patch of code gets result of the operations done above (via measurement) and makes the multiplier string zero when
+        #its value goes to 0 after consecutive decrement by 1. At this point the loop terminates and addition is stopped. 
         for i in range(len(multiplier)):
             qc.measure(multiplier[i], c_reg[i])
         job = execute(qc, backend = Aer.get_backend('qasm_simulator'), shots = 2)
         counts = job.result().get_counts(qc)
         multiplier_stopper = list(counts.keys())[0]
 
-    #Making final measurement and getting the experiment results
+    #Making final measurement and getting the results
     qc.measure(adder, c_reg)
 
     job = execute(qc, backend = Aer.get_backend('qasm_simulator'), shots = 2)
