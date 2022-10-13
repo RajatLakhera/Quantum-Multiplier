@@ -6,7 +6,7 @@ to calculate the desired result. This short writeup is to provide necessary prer
 necesary comments have been added in the python file itself to explain what's happening at each step, **this writeup will help better understand the reasoning behind
 what's being done in the code**.
 
-### If you would like to jump ahead and read the code straight away, here's the python file: [Multiplication using Quantum Algorithm](https://github.com/RajatLakhera/QOSF-Screening-Task/blob/23cd3fdaf9c954ce8788da63854aa955f0140369/Multiplication%20using%20Quantum%20Algorithm.py)
+### If you would like to jump ahead and read the code straight away, here's the python file: [Multiplication using Quantum Algorithm](https://github.com/RajatLakhera/Q.C.-Projects/blob/6ab5bd48fafe3e893a69e5c723b2edf06cb19d04/Quantum%20Multiplication.py)
 
 
 ## Why use Fourier Transform?
