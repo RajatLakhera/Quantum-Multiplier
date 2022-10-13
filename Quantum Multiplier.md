@@ -1,6 +1,6 @@
 # MULTIPLYING TWO NUMBERS USING QISKIT
 
-Among given four tasks I chose the first one and crated a function 'multiplication' that takes two numbers as its input and returns the value of their product.
+Among given four tasks I chose the first one and created a function 'multiplication' that takes two numbers as its input and returns the value of their product.
 As instructed, this has been done using Quantum gates. The backbone of this algorithm is Quantum Fourier Transform which does repeated additions alongwith bit shift
 to calculate the desired result. This short writeup is to provide necessary prerequisites and give answers to some bonus questions mentioned in the task. Although 
 necesary comments have been added in the python file itself to explain what's happening at each step, **this writeup will help better understand the reasoning behind
