@@ -3,7 +3,7 @@
 Among given four tasks I chose the first one and created a function 'multiplication' that takes two numbers as its input and returns the value of their product.
 As instructed, this has been done using Quantum gates. The backbone of this algorithm is Quantum Fourier Transform which does repeated additions to calculate the desired result. This short writeup is to provide necessary prerequisites and give answers to some bonus questions mentioned in the task. Although necesary comments have been added in the python file itself to explain what's happening at each step, **this writeup will help better understand the reasoning behind what's being done in the code**.
 
-### If you would like to jump ahead and read the code straight away, here's the python file: [Multiplication using Quantum Algorithm](https://github.com/RajatLakhera/Q.C.-Projects/blob/6ab5bd48fafe3e893a69e5c723b2edf06cb19d04/Quantum%20Multiplication.py)
+### If you would like to jump ahead and read the code straight away, here's the python file: [Multiplication using Quantum Algorithm](https://github.com/RajatLakhera/Q.C.-Projects-Codes/blob/main/Quantum%20Multiplier.ipynb)
 
 
 ## Why use Fourier Transform?
