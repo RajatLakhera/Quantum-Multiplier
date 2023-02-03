@@ -45,7 +45,7 @@ processing power. So large circuit depth and width are an issue for this functio
 
 I tried to input higher numbers in the function, at which point the program started to use half of the system's RAM. Clearly product of double digit numbers (around 40-45) can't be simulated using a normal specs pc. The highest number of qubits that I was able to simulate using this function is 34.  Researchers have simulated upto 61 qubits using Supercomputers. So that seems to be the present limit for simulating qubits. 
 
-##References:
+## References:
 1. https://arxiv.org/abs/1805.12445
 2. https://arxiv.org/abs/1411.5949
 3. https://medium.com/@sashwat.anagolum/arithmetic-on-quantum-computers-multiplication-4482cdc2d83b
